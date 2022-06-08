@@ -23,6 +23,7 @@ public class GameScreen extends JFrame {
     private JButton buttonNewGame = new JButton("Novo Jogo");
     private JButton buttonRestart = new JButton("Reiniciar partida");
     private JButton escolhas[] = Constantes.ESCOLHAS_MAX;
+    private JButton escolhasVO[] = Constantes.ESCOLHAS_MAX;
     private JLabel playerPoint = new JLabel("Pontos: 0");
 
    
@@ -35,9 +36,14 @@ public class GameScreen extends JFrame {
      
         for (int i=0; i<16; ++i){
         	escolhas[i] = new JButton();
+        	escolhasVO[i] = new JButton();
             gameScreenPanel.add(escolhas[i]);
+            gameScreenPanel.add(escolhasVO[i]);
+            escolhasVO[i].setFont(Constantes.FONT_LUCONS_BOLD_36);
+            escolhasVO[i].setVisible(true);
             escolhas[i].setFont(Constantes.FONT_LUCONS_BOLD_36);
             escolhas[i].setVisible(true);
+            
         }
      
         gameScreenPanel.setLayout(Constantes.GRID_LAYOUT_JOGO);
@@ -46,13 +52,13 @@ public class GameScreen extends JFrame {
         gameScreenStatusBar.add(playerPoint);
         add(gameScreenStatusBar, BorderLayout.SOUTH);
      
-        GameLogic gameLogic = new GameLogic(escolhas, buttonNewGame, buttonRestart, GameScreen.this);
+        GameLogic gameLogic = new GameLogic(escolhas,escolhasVO, buttonNewGame, buttonRestart, GameScreen.this);
         for (int i=0; i<16; ++i){
             escolhas[i].addActionListener(gameLogic);
         }
         buttonNewGame.addActionListener(gameLogic);
         buttonRestart.addActionListener(gameLogic);
-
+        gameLogic.actionPerformed(null);
      
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);    
@@ -69,6 +75,16 @@ public class GameScreen extends JFrame {
 
 	public void setPlayerPoint(JLabel playerPoint) {
 		this.playerPoint = playerPoint;
+	}
+
+
+	public JPanel getGameScreenPanel() {
+		return gameScreenPanel;
+	}
+
+
+	public void setGameScreenPanel(JPanel gameScreenPanel) {
+		this.gameScreenPanel = gameScreenPanel;
 	}
     
 }
