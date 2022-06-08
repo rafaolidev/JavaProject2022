@@ -19,7 +19,8 @@ public class Constantes {
 	public static String PARTIDAS_JOGADAS = "Partidas Jogadas: ";
 	public static String VITORIAS = "Vitórias: ";
 	public static String MAX_SCORE = "Maior Pontuação: ";
-	
+	public static int DELAY = 5000;
+	public static int PERIOD = 5000;
 	public static Random RandomNumber = new Random();
 	public static int random[] = new int [16];
 	public static int randomArray[] = new int [16];

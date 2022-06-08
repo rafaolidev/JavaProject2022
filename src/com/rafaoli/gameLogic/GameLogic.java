@@ -2,10 +2,10 @@ package com.rafaoli.gameLogic;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import com.rafaoli.commons.Constantes;
@@ -27,13 +27,16 @@ public class GameLogic implements ActionListener {
     private boolean isRestartGame = false;
     private boolean isEndGame = false;
     private JButton arrayEscolhas[];
+    private JButton arrayEscolhasVO[];
+    Timer timer = new Timer();	
     private JButton buttonNewGame;
     private JButton buttonRestartGame;
     private int pontos = 0;
     private GameScreen gameScreen;
     
-	public GameLogic(JButton p_escolhas[], JButton p_newGame, JButton p_restartGame, GameScreen p_gameScreen) {
+	public GameLogic(JButton p_escolhas[],JButton p_escolhasVO[], JButton p_newGame, JButton p_restartGame, GameScreen p_gameScreen) {
 		arrayEscolhas = p_escolhas;
+		arrayEscolhasVO = p_escolhasVO;
 		buttonNewGame = p_newGame;
 		buttonRestartGame = p_restartGame;
 		gameScreen = p_gameScreen;
@@ -42,6 +45,8 @@ public class GameLogic implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event){
 		
+		if( event != null) {
+
         if (event.getSource() == buttonNewGame){
             isStartNewGame = true;
             isRestartGame = false;
@@ -59,42 +64,25 @@ public class GameLogic implements ActionListener {
             lastScore = pontos;
             pontos = 0;
             clickNumber = 0;
-            position = 0; count = 16;
             firstClick = 0;
             secondClick = 0;
          
             for (int i=0; i<16; ++i){
                 arrayEscolhas[i].setText("");
                 arrayEscolhas[i].setEnabled(true);
+                arrayEscolhas[i].setVisible(true);
             }
          
-            if (isRestartGame == false){
-             
-                for (int i=0; i<16; ++i){
-                	Constantes.randomArray[i] = i;
-                }
- 
-                for (int i=0; i<8; ++i){
-                    for (int j=0; j<2; ++j){
-                        position = Constantes.RandomNumber.nextInt(count);
-                        Constantes.random[Constantes.randomArray[position]] = i;
-                 
-                        if (position < count){
-                            for (int q=(position+1); q<(count); ++q){
-                            	Constantes.randomArray[q-1] = Constantes.randomArray[q];
-                            }
-                        } count--;
-                    }
-                }
-            }
+
             isStartNewGame = false;
         }
+        
      
         for (int i=0; i<16; ++i){
          
             if (event.getSource() == arrayEscolhas[i]){
-                               
-            	arrayEscolhas[i].setText(String.valueOf(Constantes.random[i]));
+            	
+            	arrayEscolhas[i].setText(String.valueOf(Constantes.random[i]));         
             	arrayEscolhas[i].setEnabled(false);
             	arrayEscolhas[i].setVisible(true);
                 clickNumber++;
@@ -132,8 +120,51 @@ public class GameLogic implements ActionListener {
         gameScreen.getPlayerPoint().setText("Pontos: " + pontos);
         
         if (isEndGame) isEndGame = false;
-          
+		}else{                       
+           	preencherVetor();
+           }
             
     }
+	
+	public void timer() {
+
+       
+        for( int i = 0; i< Constantes.random.length;i++) {
+        	arrayEscolhasVO[i].setText(String.valueOf(Constantes.random[i]));
+        }
+ 
+        timer.schedule (new TimerTask() {
+			
+			@Override
+			public void run() {
+				for( int i = 0; i< Constantes.random.length;i++) {
+					arrayEscolhasVO[i].setText("");
+				}	
+				timer.cancel();
+			}
+		}, Constantes.DELAY, Constantes.PERIOD);            
+	}
+	
+	public void preencherVetor() {
+        position = 0; count = 16;
+
+        for (int i=0; i<16; ++i){
+        	Constantes.randomArray[i] = i;
+        }
+
+        for (int i=0; i<8; ++i){
+            for (int j=0; j<2; ++j){
+                position = Constantes.RandomNumber.nextInt(count);
+                Constantes.random[Constantes.randomArray[position]] = i;
+         
+                if (position < count){
+                    for (int q=(position+1); q<(count); ++q){
+                    	Constantes.randomArray[q-1] = Constantes.randomArray[q];
+                    }
+                } count--;
+            }
+        }        
+        timer();
+	}
 
 }
