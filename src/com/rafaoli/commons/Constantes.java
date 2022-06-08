@@ -2,9 +2,9 @@ package com.rafaoli.commons;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.Random;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 public class Constantes {
 	
@@ -19,5 +19,9 @@ public class Constantes {
 	public static String PARTIDAS_JOGADAS = "Partidas Jogadas: ";
 	public static String VITORIAS = "Vitórias: ";
 	public static String MAX_SCORE = "Maior Pontuação: ";
+	
+	public static Random RandomNumber = new Random();
+	public static int random[] = new int [16];
+	public static int randomArray[] = new int [16];
 
 }

@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import com.rafaoli.commons.Constantes;
 import com.rafaoli.graficos.GameScreen;
 
 public class GameLogic implements ActionListener {
@@ -41,11 +42,6 @@ public class GameLogic implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event){
 		
-		
-		Random RandomNumber = new Random();
-	    int random[] = new int [16];
-	    int randomArray[] = new int [16];
-        
         if (event.getSource() == buttonNewGame){
             isStartNewGame = true;
             isRestartGame = false;
@@ -75,17 +71,17 @@ public class GameLogic implements ActionListener {
             if (isRestartGame == false){
              
                 for (int i=0; i<16; ++i){
-                	randomArray[i] = i;
+                	Constantes.randomArray[i] = i;
                 }
  
                 for (int i=0; i<8; ++i){
                     for (int j=0; j<2; ++j){
-                        position = RandomNumber.nextInt(count);
-                        random[randomArray[position]] = i;
+                        position = Constantes.RandomNumber.nextInt(count);
+                        Constantes.random[Constantes.randomArray[position]] = i;
                  
                         if (position < count){
                             for (int q=(position+1); q<(count); ++q){
-                            	randomArray[q-1] = randomArray[q];
+                            	Constantes.randomArray[q-1] = Constantes.randomArray[q];
                             }
                         } count--;
                     }
@@ -98,15 +94,15 @@ public class GameLogic implements ActionListener {
          
             if (event.getSource() == arrayEscolhas[i]){
                                
-            	arrayEscolhas[i].setText(String.valueOf(random[i]));
+            	arrayEscolhas[i].setText(String.valueOf(Constantes.random[i]));
             	arrayEscolhas[i].setEnabled(false);
             	arrayEscolhas[i].setVisible(true);
                 clickNumber++;
              
-                if (firstClick == 1) firstClick = i;
-                    if (secondClick == 2){
+                if (clickNumber == 1) firstClick = i;
+                    if (clickNumber == 2){
                     	secondClick = i;
-                        if (random[firstClick] != random[secondClick]){                                                      
+                        if (Constantes.random[firstClick] != Constantes.random[secondClick]){                                                      
                             pontos-=3;
                             JOptionPane.showMessageDialog(gameScreen, "Errado");
                             arrayEscolhas[firstClick].setText("");
@@ -118,7 +114,7 @@ public class GameLogic implements ActionListener {
                             cont_acertos++;
                             pontos+=5;
                     }
-                        firstClick = 0;
+                        clickNumber = 0;
                 }
             }
         }
@@ -134,6 +130,9 @@ public class GameLogic implements ActionListener {
      
         if (pontos < 0) pontos = 0;
         gameScreen.getPlayerPoint().setText("Pontos: " + pontos);
+        
+        if (isEndGame) isEndGame = false;
+          
             
     }
 

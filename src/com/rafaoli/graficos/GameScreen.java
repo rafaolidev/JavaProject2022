@@ -46,7 +46,7 @@ public class GameScreen extends JFrame {
         gameScreenStatusBar.add(playerPoint);
         add(gameScreenStatusBar, BorderLayout.SOUTH);
      
-        GameLogic gameLogic = new GameLogic(escolhas, buttonNewGame, buttonNewGame, GameScreen.this);
+        GameLogic gameLogic = new GameLogic(escolhas, buttonNewGame, buttonRestart, GameScreen.this);
         for (int i=0; i<16; ++i){
             escolhas[i].addActionListener(gameLogic);
         }
