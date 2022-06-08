@@ -21,7 +21,6 @@ public class GameScreen extends JFrame {
     private JPanel gameScreenPanel = new JPanel();
     private JPanel gameScreenStatusBar = new JPanel();
     private JButton buttonNewGame = new JButton("Novo Jogo");
-    private JButton buttonRestart = new JButton("Reiniciar partida");
     private JButton escolhas[] = Constantes.ESCOLHAS_MAX;
     private JButton escolhasVO[] = Constantes.ESCOLHAS_MAX;
     private JLabel playerPoint = new JLabel("Pontos: 0");
@@ -31,7 +30,6 @@ public class GameScreen extends JFrame {
         super(Constantes.TITULO_JOGO);
      
         gameScreenToolBar.add(buttonNewGame);
-        gameScreenToolBar.add(buttonRestart);
         add(gameScreenToolBar, BorderLayout.NORTH);
      
         for (int i=0; i<16; ++i){
@@ -52,12 +50,11 @@ public class GameScreen extends JFrame {
         gameScreenStatusBar.add(playerPoint);
         add(gameScreenStatusBar, BorderLayout.SOUTH);
      
-        GameLogic gameLogic = new GameLogic(escolhas,escolhasVO, buttonNewGame, buttonRestart, GameScreen.this);
+        GameLogic gameLogic = new GameLogic(escolhas,escolhasVO, buttonNewGame, GameScreen.this);
         for (int i=0; i<16; ++i){
             escolhas[i].addActionListener(gameLogic);
         }
         buttonNewGame.addActionListener(gameLogic);
-        buttonRestart.addActionListener(gameLogic);
         gameLogic.actionPerformed(null);
      
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

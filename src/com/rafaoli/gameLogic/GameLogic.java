@@ -30,15 +30,13 @@ public class GameLogic implements ActionListener {
     private JButton arrayEscolhasVO[];
     Timer timer = new Timer();	
     private JButton buttonNewGame;
-    private JButton buttonRestartGame;
     private int pontos = 0;
     private GameScreen gameScreen;
     
-	public GameLogic(JButton p_escolhas[],JButton p_escolhasVO[], JButton p_newGame, JButton p_restartGame, GameScreen p_gameScreen) {
+	public GameLogic(JButton p_escolhas[],JButton p_escolhasVO[], JButton p_newGame, GameScreen p_gameScreen) {
 		arrayEscolhas = p_escolhas;
 		arrayEscolhasVO = p_escolhasVO;
 		buttonNewGame = p_newGame;
-		buttonRestartGame = p_restartGame;
 		gameScreen = p_gameScreen;
 	}
 	
@@ -50,11 +48,6 @@ public class GameLogic implements ActionListener {
         if (event.getSource() == buttonNewGame){
             isStartNewGame = true;
             isRestartGame = false;
-        }
-     
-        if (event.getSource() == buttonRestartGame){
-        	isStartNewGame = true;
-        	isRestartGame = true;
         }
      
         if ( isStartNewGame ){
